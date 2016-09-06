@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Especificación Básica</title>
+	<link rel="stylesheet"
+		href="styles/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="styles/app/estilo.css">
+	<link rel="stylesheet" type="text/css"
+		href="scripts/app/datatables/media/css/dataTables.bootstrap.min.css">
+	<script src="scripts/jquery/jquery.min.js"></script>
+	<script src="scripts/app/documentStyle.js"></script>
+	<script src="scripts/app/getAPI.js"></script>
+	<script src="scripts/app/operaciones.js"></script>
+	<script src="scripts/app/jsoneditor.min.js"></script>
+	<script>
+		JSONEditor.defaults.theme = 'bootstrap2';
+	</script>
+  </head>
+  <body>
+    <h1>Especificación Básica</h1>
+    <button id = 'especifSi'>Sí</button>
+	<button id = 'especifNo'>No</button>
+    <div id='editor_holder'></div>
+    <button id='submit'>Submit (console.log)</button>
+    
+	<script>
+		var base_url = "http://localhost:8080/AmbarNutricion";
+		document.getElementById('especifSi').disabled = true;
+		$(document).ready(function(){
+			process = function(response){
+			
+				//console.log(response);
+				var json = getCategoriasJSON(response);
+				console.log(json);
+				
+				var editor = new JSONEditor(document.getElementById('editor_holder'),{
+					schema: json,
+					disable_collapse: true,
+					disable_edit_json: true,
+					disable_properties: true,
+					disable_array_delete_last_row: true
+				});
+				
+				giveStyle();
+			};
+			getAPI(
+			'/categoriacomidas?find=ByValidAndDesayuno&valid=true&desayuno=true',
+			process);
+		});
+	</script>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+
+<title>${titulo}</title>
+<link rel="stylesheet"
+	href="styles/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="styles/app/estilo.css">
+<link rel="stylesheet" type="text/css"
+	href="scripts/app/datatables/media/css/dataTables.bootstrap.min.css">
+<script type="text/javascript"
+	src="scripts/app/datatables/media/js/jquery.js"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="scripts/app/datatables/media/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">			
+		</div>
+		
+		
+		<!------------------------------------------------------------------------->
+		
+		
+		<div class="row">
+			<ol class="breadcrumb">
+			<li class="active btn btn-link unidades" onClick="showUnidades();">Unidades</li>
+			<li class="btn btn-link salas">Unidades</li>
+			<li class="btn btn-link pacientes">Pacientes</li>
+		</ol>
+
+		<div id="unidades"></div>
+		<div id="salas"></div>
+		<div id="pacientes"></div>
+
+		<script type="text/javascript"
+			src="scripts/handlebars/handlebars.min-latest.js"></script>
+		<script type="text/javascript"
+			src="scripts/app/navegacion.js"></script>
+		<script type="text/javascript"
+			src="scripts/app/getAPI.js"></script>
+			
+		<script type="text/javascript">
+			var base_url = 'http://localhost:8080/AmbarNutricion';
+			var unidades = [];
+			$(document).ready(function() {
+				Handlebars.registerHelper('base_url', function() {
+					  return base_url;
+				});
+				getUnidades();
+				showUnidades();
+			});
+		</script>
+		
+		<!-- Creación botones unidades -->
+		<script id="unidadesTemplate" type="text/x-handlebars-template">
+			{{#each unidades}}
+			<div class="col-xs-4 col-sm-4 col-md-4">
+			<a class="thumbnail" href="javascript:void(0);" onClick="showSalas('{{id}}');">
+				<button class="thumbnail btn-thumbnail">
+					<img src="{{base_url}}/images/ambar_nutricion/arrow.png" alt="{{id}}" height="100" width="100"> 
+					<h4>{{id}}</h4>
+				</button>
+			</a>
+			</div>
+			{{/each}}
+		</script>
+		
+		<!-- Creación botones salas -->
+		<script id="salasTemplate" type="text/x-handlebars-template">
+			{{#each salas}}
+			<div class="col-xs-12 col-sm-6 col-md-6">
+			<a class="thumbnail" href="javascript:void(0);" onClick="showPacientes('{{../unidad}}', {{id.salSala}});">
+				<button class="thumbnail btn-thumbnail">
+					<h4>Sala: {{id.salSala}} </h4>
+					<div class="salas_pacientes_{{id.salSala}}"></div><br>
+				</button>
+			</a>
+			</div>
+			{{/each}}
+		</script>
+		
+		
+		<script id="pacienteSalaTemplate" type="text/x-handlebars-template">
+			
+			<div class="table-responsive">
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<td>Nombre</td>
+							<td>Ficha</td>
+							<td>Cama</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#if idHospitalizaciones}}
+							{{#each idHospitalizaciones}}
+								<tr>
+									<td>{{hospitalizadosPaciente this "primerNombre"}} {{hospitalizadosPaciente this "apellidoPaterno"}}</td>
+									<td>{{hospitalizadosPaciente this "ficha"}}</td>
+									<td>{{hospitalizados this "cama"}}</td>
+								</tr>
+							{{/each}}
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
+		</script>
+				
+		<script id="pacienteTemplate" type="text/x-handlebars-template">
+					
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<td>Paciente</td>
+							<td>Ficha</td>
+							<td>Cama</td>
+							<td>Información <br> Nutricional</td>
+							<td>Sedile</td><td>Producción</td>
+						</tr>
+					</thead>
+					<tbody>
+						{{#if idHospitalizaciones}}
+							{{#each idHospitalizaciones}}
+								<tr>
+									<td>{{hospitalizadosPaciente this "primerNombre"}} {{hospitalizadosPaciente this "apellidoPaterno"}}</td>
+									<td>{{hospitalizadosPaciente this "ficha"}}</td>
+									<td>{{hospitalizados this "cama"}}</td>
+									<td>
+										<button type="submit" class="btn btn-primary btn-lg">
+											<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+										</button>
+									</td>
+									<td>
+										<form class="form-inline" action="{{base_url}}/especificacionliquidas/agregar" method="GET">
+											<input type="hidden" name="fichaPaciente" value="{{hospitalizadosPaciente this "ficha"}}" />
+											<button type="submit" class="btn btn-primary btn-lg">
+												<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+											</button>
+										</form>
+									</td>
+									<td>
+										<form class="form-inline" action="{{base_url}}/especificacionsolidas/agregar" method="GET">
+											<input type="hidden" name="fichaPaciente" value="{{hospitalizadosPaciente this "ficha"}}" />
+											<button type="submit" class="btn btn-primary btn-lg">
+												<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+											</button>
+										</form>
+									</td>
+								</tr>
+							{{/each}}
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
+		</script>
+		
+		
+		<!------------------------------------------------------------------------->
+		
+		
+		</div>
+		<div class="row">
+		</div>
+	</div>
+</body>
+</html>
