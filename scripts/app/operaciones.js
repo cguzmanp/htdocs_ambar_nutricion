@@ -1,14 +1,6 @@
 function getCategoriasJSON(data) {
 	var newData = {title: "Especificación", type: "object", id: "especificacion"};
 	newData.properties = {};
-	/* newData.properties["ESPECIFICAR"] = {
-		title: "Especificar?",
-		type: "String",
-		enum: [
-			"Sí",
-			"No"
-		]
-	}; */
 	
 	for (i in data){
 		newData.properties[data[i]["nombre"]] =
@@ -22,6 +14,7 @@ function getCategoriasJSON(data) {
 		for (j in data[i].tipoDeComidas){
 			newData.properties[data[i]["nombre"]].items.oneOf[j] = {
 				title: data[i].tipoDeComidas[j]["nombre"],
+				headerTemplate: "{{}}",
 				properties: {
 					Opcion: {
 						type: "string",

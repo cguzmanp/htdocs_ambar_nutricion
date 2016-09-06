@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Especificación Básica</title>
 	<link rel="stylesheet"
-		href="styles/bootstrap/bootstrap.min.css">
+		href="styles/bootstrap3/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"
 		href="styles/app/estilo.css">
 	<link rel="stylesheet" type="text/css"
@@ -16,12 +16,15 @@
 	<script src="scripts/app/jsoneditor.min.js"></script>
 	<script>
 		JSONEditor.defaults.theme = 'bootstrap2';
+		JSONEditor.defaults.languages.en.button_add_row_title = "+";
+		JSONEditor.defaults.languages.en.button_delete_row_title = "x"; // Cambiar por algo más decente???
 	</script>
   </head>
   <body>
     <h1>Especificación Básica</h1>
+	<label>Especificar?</label>
     <button id = 'especifSi'>Sí</button>
-	<button id = 'especifNo'>No</button>
+	<button id = 'especifNo'>No</button> <br>
     <div id='editor_holder'></div>
     <button id='submit'>Submit (console.log)</button>
     
@@ -40,7 +43,9 @@
 					disable_collapse: true,
 					disable_edit_json: true,
 					disable_properties: true,
-					disable_array_delete_last_row: true
+					disable_array_delete_last_row: true,
+					disable_array_reorder: true,
+					disable_delete_all: true
 				});
 				
 				giveStyle();
