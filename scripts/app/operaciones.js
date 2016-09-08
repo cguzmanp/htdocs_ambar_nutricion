@@ -19,22 +19,22 @@ function getCategoriasJSON(data) {
 				format: "grid",
 				headerTemplate: "{{}}",
 				properties: {
-					opcion: {
+					Opcion: {
 						type: "string",
 						enum: ["-"]
 					},
-					porcion: {
+					Porcion: {
 						type: "integer",
 						enum: []
 					},
-					especificar: {
+					Especificar: {
 						type: "string"
 					}
 				}
 			};
 			
 			for (k in data[i].tipoDeComidas[j].opcionComidas) {
-				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.opcion.enum[k] = 
+				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Opcion.enum[k] = 
 					data[i].tipoDeComidas[j].opcionComidas[k]["nombre"];
 			}
 			
@@ -42,11 +42,11 @@ function getCategoriasJSON(data) {
 			for (	m=data[i].tipoDeComidas[j].valorMin;
 					m<=data[i].tipoDeComidas[j].valorMax;
 					m+=data[i].tipoDeComidas[j].incremento) {
-				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.porcion.enum[n] = m;
+				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Porcion.enum[n] = m;
 				n++;
 			}
 		}
 	}
-	console.log(JSON.stringify(newData));
+	//console.log(JSON.stringify(newData));
 	return newData = JSON.parse(JSON.stringify(newData));
 }

@@ -2,6 +2,9 @@ function giveStyle(){
 	especifyButtons();
 	changeTitles();
 	addFormClassToSelect();
+	fixSelect();
+	oneElement();
+	getTypesInside();
 }
 
 function especifyButtons() {
@@ -37,22 +40,33 @@ function addFormClassToSelect() {
 		console.log( "HEY!!" );
 		$("* select").addClass("form-control");
 		$("* input").addClass("form-control");
-		$("h3").remove();
 		
 		$("select").on("change", function() {
 			console.log( "HEY!!" );
 			$("* select").addClass("form-control");
-			$("* input").addClass("form-control");
-			$("h3").remove();
+			$("* input").addClass("form-control");			
 		});
 	});
 }
 
 function fixSelect() {
-	//$(".container-fluid").
+	$(".row").css("max-width", "none");
+	$("th").remove();
+	
 }
 
+function oneElement() {
+	$(".json-editor-btn-add:contains('+')").click();
+	$("button.delete[data-i='0']").prop("disabled", true);
+	$("h3").remove();
+	$("div.col-md-12").each( function(){
+		$(this).find("label")[1].remove();
+	});
+}
 
+function getTypesInside() {
+	// $(".row:has(.row)").each( function() { $(this).find("label")[0].css("color","red") } );
+}
 
 
 
