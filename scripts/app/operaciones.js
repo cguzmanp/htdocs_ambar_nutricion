@@ -6,6 +6,7 @@ function getCategoriasJSON(data) {
 		newData.properties[data[i]["nombre"]] =
 			{	title: data[i]["nombre"],
 				type: "array",
+				format: "table",
 				items: {
 					oneOf: []
 				}
@@ -14,24 +15,26 @@ function getCategoriasJSON(data) {
 		for (j in data[i].tipoDeComidas){
 			newData.properties[data[i]["nombre"]].items.oneOf[j] = {
 				title: data[i].tipoDeComidas[j]["nombre"],
+				type: "object",
+				format: "grid",
 				headerTemplate: "{{}}",
 				properties: {
-					Opcion: {
+					opcion: {
 						type: "string",
 						enum: ["-"]
 					},
-					Porcion: {
+					porcion: {
 						type: "integer",
 						enum: []
 					},
-					Especificar: {
+					especificar: {
 						type: "string"
 					}
 				}
 			};
 			
 			for (k in data[i].tipoDeComidas[j].opcionComidas) {
-				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Opcion.enum[k] = 
+				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.opcion.enum[k] = 
 					data[i].tipoDeComidas[j].opcionComidas[k]["nombre"];
 			}
 			
@@ -39,11 +42,11 @@ function getCategoriasJSON(data) {
 			for (	m=data[i].tipoDeComidas[j].valorMin;
 					m<=data[i].tipoDeComidas[j].valorMax;
 					m+=data[i].tipoDeComidas[j].incremento) {
-				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Porcion.enum[n] = m;
+				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.porcion.enum[n] = m;
 				n++;
 			}
 		}
 	}
-	//console.log(JSON.stringify(newData));
+	console.log(JSON.stringify(newData));
 	return newData = JSON.parse(JSON.stringify(newData));
 }

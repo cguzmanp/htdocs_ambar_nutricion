@@ -33,11 +33,23 @@ function changeTitles() {
 }
 
 function addFormClassToSelect() {
-	$(".json-editor-btn-add").on('click',function() {
+	$(".json-editor-btn-add").on('click', function() {
 		console.log( "HEY!!" );
 		$("* select").addClass("form-control");
 		$("* input").addClass("form-control");
-	});	
+		$("h3").remove();
+		
+		$("select").on("change", function() {
+			console.log( "HEY!!" );
+			$("* select").addClass("form-control");
+			$("* input").addClass("form-control");
+			$("h3").remove();
+		});
+	});
+}
+
+function fixSelect() {
+	//$(".container-fluid").
 }
 
 
