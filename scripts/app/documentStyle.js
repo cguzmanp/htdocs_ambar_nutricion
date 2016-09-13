@@ -2,30 +2,27 @@ function giveStyle(){
 	especifyButtons();
 	changeTitles();
 	addFormClassToSelect();
+	loadOneElementByCategory();
 	fixSelect();
-	oneElement();
-	getTypesInside();
+	selectChanges();
+	tableWidth();
 }
 
 function especifyButtons() {
-	document.getElementById('submit').addEventListener('click',function() {
-		console.log(editor.getValue());
-	});
-	
-	document.getElementById('especifSi').addEventListener('click',function() {
+	$("#especifSi").on('click', function() {
 		console.log("Sí");
-		document.getElementById('especifSi').disabled = true;
-		document.getElementById('especifNo').disabled = false;
-		document.getElementById('editor_holder').hidden = false;
-		document.getElementById('submit').hidden = false;
+		$('#especifSi').prop("disabled", true);
+		$('#especifNo').prop("disabled", false);
+		$('#editor_holder').prop("hidden", false);
+		$('#submit').prop("hidden", false);
 	});
 	
-	document.getElementById('especifNo').addEventListener('click',function() {
+	$("#especifNo").on('click', function() {
 		console.log("No");
-		document.getElementById('especifNo').disabled = true;
-		document.getElementById('especifSi').disabled = false;
-		document.getElementById('editor_holder').hidden = true;
-		document.getElementById('submit').hidden = true;
+		$('#especifSi').prop("disabled", false);
+		$('#especifNo').prop("disabled", true);
+		$('#editor_holder').prop("hidden", true);
+		$('#submit').prop("hidden", true);
 	});
 }
 
@@ -37,36 +34,70 @@ function changeTitles() {
 
 function addFormClassToSelect() {
 	$(".json-editor-btn-add").on('click', function() {
-		console.log( "HEY!!" );
 		$("* select").addClass("form-control");
 		$("* input").addClass("form-control");
+		$("h3").remove();
 		
-		$("select").on("change", function() {
-			console.log( "HEY!!" );
-			$("* select").addClass("form-control");
-			$("* input").addClass("form-control");			
+		$("button.json-editor-btn-delete").on("click", function() {
+			$(".row").removeClass('row');
+			addColClasses();
 		});
+		
+		var $table = $(event.target).parent().parent();
+		
+		$table.find("tr:last td:first").prepend( "<div class='col-xs-4'><div class='form-group'></div></div>" );
+		$table.find("tr:last label:first").text("Comida").addClass("control-label").appendTo( $table.find("tr:last .form-group:first") );
+		$table.find("tr:last select:first").removeAttr("style").appendTo( $table.find("tr:last .form-group:first") );
+		$table.find('.row').removeClass('row');
+		$table.find('table .well.well-sm').removeClass('well').removeClass('well-sm');
+		
+		$("select option[value=undefined]").remove();
+		selectChanges();
+		addColClasses();
+	});
+}
+
+function selectChanges() {
+	$("select").on("change", function() {
+		$("* select").addClass("form-control");
+		$("* input").addClass("form-control");
+		$("h3").remove();
+		$("div.col-md-12 .row").removeClass("row");
+		$("table .well").removeClass("well").removeClass("well-sm");
+		$("select option[value=undefined]").remove();
+		addColClasses();
 	});
 }
 
 function fixSelect() {
 	$(".row").css("max-width", "none");
 	$("th").remove();
-	
 }
 
-function oneElement() {
+function loadOneElementByCategory() {
 	$(".json-editor-btn-add:contains('+')").click();
 	$("button.delete[data-i='0']").prop("disabled", true);
 	$("h3").remove();
 	$("div.col-md-12").each( function(){
-		$(this).find("label")[1].remove();
+		$(this).find("tr:last td:first").prepend( "<div class='col-xs-4'><div class='form-group'></div></div>" );
+		$(this).find("tr:last label:first").text("Comida").addClass("control-label").appendTo( $(this).find("tr:last .form-group:first") );
+		$(this).find("tr:last select:first").removeAttr("style").appendTo( $(this).find("tr:last .form-group:first") );
+		$(this).find('.row').removeClass('row');
+		$(this).find('table .well.well-sm').removeClass('well').removeClass('well-sm');
 	});
+	$("select option[value=undefined]").remove();
+	addColClasses();
 }
 
-function getTypesInside() {
-	// $(".row:has(.row)").each( function() { $(this).find("label")[0].css("color","red") } );
+function tableWidth() {
+	$(".table.table-bordered").css("width", "");
+	$(".well:first").removeClass("well-sm").removeClass("well");
+	$("div label:first").remove();
 }
 
-
+function addColClasses() {
+	$("div[data-schemapath*='Opcion']").removeClass().addClass("col-xs-3");
+	$("div[data-schemapath*='Porcion']").removeClass().addClass("col-xs-2");
+	$("div[data-schemapath*='Especificar']").removeClass().addClass("col-xs-3");
+}
 

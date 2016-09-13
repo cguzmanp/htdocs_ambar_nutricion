@@ -17,7 +17,6 @@ function getCategoriasJSON(data) {
 				title: data[i].tipoDeComidas[j]["nombre"],
 				type: "object",
 				format: "grid",
-				headerTemplate: "{{}}",
 				properties: {
 					Opcion: {
 						type: "string",

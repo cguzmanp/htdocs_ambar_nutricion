@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Especificación Básica</title>
+	<link rel="stylesheet"
+		href="styles/bootstrap3/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="styles/foundation/foundation.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="styles/app/estilo.css">
+	<link rel="stylesheet" type="text/css"
+		href="scripts/app/datatables/media/css/dataTables.bootstrap.min.css">
+	<script src="scripts/jquery/jquery.min.js"></script>
+	<script src="scripts/app/documentStyle.js"></script>
+	<script src="scripts/app/getAPI.js"></script>
+	<script src="scripts/app/operaciones.js"></script>
+	<script src="scripts/app/jsoneditor.min.js"></script>
+	<script>
+		JSONEditor.defaults.theme = 'bootstrap3';
+		JSONEditor.defaults.languages.en.button_add_row_title = "+";
+		JSONEditor.defaults.languages.en.button_delete_row_title_short = "x";
+	</script>
+  </head>
+  <body>
+    <h1>Especificación Básica</h1>
+	<label>Especificar?</label>
+    <button id = 'especifSi'>Sí</button>
+	<button id = 'especifNo'>No</button> <br>
+    <div id='editor_holder'></div>
+    <button id='submit'>Submit (console.log)</button>
+    
+	<script>
+		var base_url = "http://localhost:8080/AmbarNutricion";
+		document.getElementById('especifSi').disabled = true;
+		$(document).ready(function(){
+			process = function(response){
+			
+				var json = getCategoriasJSON(response);
+				
+				var editor = new JSONEditor(document.getElementById('editor_holder'),{
+					schema: json,
+					disable_collapse: true,
+					disable_edit_json: true,
+					disable_properties: true,
+					disable_array_reorder: true,
+					disable_array_delete_last_row: true,
+					disable_array_delete_all_rows: true,
+				});
+				
+				giveStyle();
+				document.getElementById('submit').addEventListener('click',function() {
+					console.log(JSON.stringify(editor.getValue()));
+				});
+			};
+			getAPI(
+			'/categoriacomidas?find=ByValidAndDesayuno&valid=true&desayuno=true',
+			process);
+		});
+	</script>
+  </body>
+</html>
