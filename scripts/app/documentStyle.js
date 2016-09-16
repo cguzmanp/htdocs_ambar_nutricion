@@ -3,9 +3,14 @@ function giveStyle(){
 	changeTitles();
 	addFormClassToSelect();
 	loadOneElementByCategory();
-	fixSelect();
+	deleteType();
+	repairSelect();
 	selectChanges();
 	tableWidth();
+}
+
+function deleteType() {
+	$("div[data-schemapath*='Tipo']").remove();
 }
 
 function especifyButtons() {
@@ -34,12 +39,15 @@ function changeTitles() {
 
 function addFormClassToSelect() {
 	$(".json-editor-btn-add").on('click', function() {
+		deleteType();
 		$("* select").addClass("form-control");
 		$("* input").addClass("form-control");
 		$("h3").remove();
 		
 		$("button.json-editor-btn-delete").on("click", function() {
+			deleteType();
 			$(".row").removeClass('row');
+			$("table .well").removeClass("well").removeClass("well-sm");
 			addColClasses();
 		});
 		
@@ -52,6 +60,10 @@ function addFormClassToSelect() {
 		$table.find('table .well.well-sm').removeClass('well').removeClass('well-sm');
 		
 		$("select option[value=undefined]").remove();
+		
+		$("div.col-md-12").each( function(){
+			$(this).find("tbody tr:not(:first) label").remove();
+		});
 		selectChanges();
 		addColClasses();
 	});
@@ -59,17 +71,21 @@ function addFormClassToSelect() {
 
 function selectChanges() {
 	$("select").on("change", function() {
+		deleteType();
 		$("* select").addClass("form-control");
 		$("* input").addClass("form-control");
 		$("h3").remove();
 		$("div.col-md-12 .row").removeClass("row");
 		$("table .well").removeClass("well").removeClass("well-sm");
 		$("select option[value=undefined]").remove();
+		$("div.col-md-12").each( function(){
+			$(this).find("tbody tr:not(:first) label").remove();
+		});
 		addColClasses();
 	});
 }
 
-function fixSelect() {
+function repairSelect() {
 	$(".row").css("max-width", "none");
 	$("th").remove();
 }

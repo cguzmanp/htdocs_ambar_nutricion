@@ -18,6 +18,10 @@ function getCategoriasJSON(data) {
 				type: "object",
 				format: "grid",
 				properties: {
+					Tipo: {
+						type: "string",
+						default: data[i].tipoDeComidas[j].nombre
+					},
 					Opcion: {
 						type: "string",
 						enum: ["-"]
