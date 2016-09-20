@@ -35,8 +35,8 @@
 		document.getElementById('especifSi').disabled = true;
 		$(document).ready(function(){
 			process = function(response){
-			
-				var json = getCategoriasJSON(response);
+				console.log(response);
+				var json = getSolidosJSON(response);
 				
 				var editor = new JSONEditor(document.getElementById('editor_holder'),{
 					schema: json,

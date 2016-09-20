@@ -1,4 +1,4 @@
-function getCategoriasJSON(data) {
+function getSolidosJSON(data) {
 	var newData = {title: "Especificación", type: "object", id: "especificacion"};
 	newData.properties = {};
 	
