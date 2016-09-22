@@ -1,0 +1,121 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+
+<title>${titulo}</title>
+<link rel="stylesheet"
+	href="styles/bootstrap3/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="styles/app/estilo.css">
+<script type="text/javascript"
+	src="scripts/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="scripts/bootstrap3/bootstrap.min.js"></script>
+
+<style type="text/css">
+	.selectedThumb {
+		border: 1px;
+		border-style: solid;
+		border-color: #ff0000;
+		border-style: solid;
+	}
+
+	.formGrayOut {
+		background: #ccc;
+	}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<span class="col-xs-12">
+			<hr>
+			</span>
+			
+		</div>
+		<div class="row">
+			<span class="col-xs-12"> 
+			<ol class="breadcrumb">
+			<li class="active btn btn-link horarioEspecificacionBread"
+				onClick="seleccionarHorario();">Selección de horarios</li>
+			<li class="btn btn-link especificacionSolidaBread"
+				onClick="continuar();">Especificación Sólida</li>
+		</ol>
+
+		<div id="horarioEspecificacion">
+			<div class="col-xs-4 col-sm-4 col-md-4 ">
+				<div class="thumbnail" id="botonDesayuno"
+					onClick="toggleHorarioComida(0, this);continuar();">
+					<button class="thumbnail btn-thumbnail">
+						<img
+							src="http://localhost:8080/AmbarNutricion/images/ambar_nutricion/desayuno.png"
+							alt="" height="100" width="100"> <br>
+						<h3>Desayuno</h3>
+					</button>
+					<div class="input-group" id="estadoHorarioDesayuno">
+						<input type="date" class="form-control" id="fechaComida_0"
+							onChange="changeFechaComida(0, this.value);" disabled />
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<div class="thumbnail" id="botonAlmuerzo"
+					onClick="toggleHorarioComida(1, this);continuar();">
+					<button class="thumbnail btn-thumbnail">
+						<img
+							src="http://localhost:8080/AmbarNutricion/images/ambar_nutricion/almuerzo.png"
+							alt="" height="100" width="100"> <br>
+						<h3>Almuerzo</h3>
+					</button>
+					<div class="input-group" id="estadoHorarioAlmuerzo">
+						<input type="date" class="form-control" id="fechaComida_1"
+							onChange="changeFechaComida(1, this.value);" disabled />
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<div class="thumbnail" id="botonOnce"
+					onClick="toggleHorarioComida(2, this);continuar();">
+					<button class="thumbnail btn-thumbnail">
+						<img
+							src="http://localhost:8080/AmbarNutricion/images/ambar_nutricion/once.png"
+							alt="" height="100" width="100"> <br>
+						<h3>Once</h3>
+					</button>
+					<div class="input-group" id="estadoHorarioOnce">
+						<input type="date" class="form-control" id="fechaComida_2"
+							onChange="changeFechaComida(2, this.value);" disabled />
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-4 col-md-4">
+				<div class="thumbnail" id="botonCena"
+					onClick="toggleHorarioComida(3, this);continuar();">
+					<button class="thumbnail btn-thumbnail">
+						<img
+							src="http://localhost:8080/AmbarNutricion/images/ambar_nutricion/cena.png"
+							alt="" height="100" width="100"> <br>
+						<h3>Cena</h3>
+					</button>
+					<div class="input-group" id="estadoHorarioCena">
+						<input type="date" class="form-control" id="fechaComida_3"
+							onChange="changeFechaComida(3, this.value);" disabled />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<span class="col-xs-12">
+			</span>
+		</div>
+	</div>
+</body>
+</html>

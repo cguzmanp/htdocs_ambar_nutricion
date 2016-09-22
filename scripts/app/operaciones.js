@@ -1,5 +1,7 @@
-function getSolidosJSON(data) {
-	var newData = {title: "Especificación", type: "object", id: "especificacion"};
+function getJSONSchema(data) {
+	var newData = {	title: "Especificación",
+					type: "object",
+					id: "especificacion"};
 	newData.properties = {};
 	
 	for (i in data){
@@ -18,13 +20,18 @@ function getSolidosJSON(data) {
 				type: "object",
 				format: "grid",
 				properties: {
-					Tipo: {
+					Id_tipo: {
 						type: "string",
-						default: data[i].tipoDeComidas[j].nombre
+						default: data[i].tipoDeComidas[j].id
 					},
-					Opcion: {
-						type: "string",
-						enum: ["-"]
+					Id_opcion: {
+						type: "int",
+						title: "Opcion",
+						enumSource: [{
+						  source: [],
+						  title: "{{item.title}}",
+						  value: "{{item.value}}"
+						}]
 					},
 					Porcion: {
 						type: "integer",
@@ -37,8 +44,9 @@ function getSolidosJSON(data) {
 			};
 			
 			for (k in data[i].tipoDeComidas[j].opcionComidas) {
-				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Opcion.enum[k] = 
-					data[i].tipoDeComidas[j].opcionComidas[k]["nombre"];
+				newData.properties[data[i]["nombre"]].items.oneOf[j].properties.Id_opcion.enumSource[0].source[k] = 
+				{ value: data[i].tipoDeComidas[j].opcionComidas[k]["id"],
+				title: data[i].tipoDeComidas[j].opcionComidas[k]["nombre"] };
 			}
 			
 			var n = 0;

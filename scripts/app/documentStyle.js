@@ -10,7 +10,13 @@ function giveStyle(){
 }
 
 function deleteType() {
-	$("div[data-schemapath*='Tipo']").remove();
+	$("div[data-schemapath*='Id_tipo']").remove();
+	$("select[name*='Id_tipo'] :nth-child(1)").prop('selected', true);
+	$("div[data-schemapath*='fecha_comida']").parent().remove();
+	$("div[data-schemapath*='horario_comida']").parent().remove();
+	$("div[data-schemapath*='no_especificar']").parent().remove();
+	$("div[data-schemapath*='hospitalizacion_id']").parent().remove();
+	$("div[data-schemapath*='clave_corta']").parent().remove();
 }
 
 function especifyButtons() {
@@ -19,7 +25,6 @@ function especifyButtons() {
 		$('#especifSi').prop("disabled", true);
 		$('#especifNo').prop("disabled", false);
 		$('#editor_holder').prop("hidden", false);
-		$('#submit').prop("hidden", false);
 	});
 	
 	$("#especifNo").on('click', function() {
@@ -27,7 +32,6 @@ function especifyButtons() {
 		$('#especifSi').prop("disabled", false);
 		$('#especifNo').prop("disabled", true);
 		$('#editor_holder').prop("hidden", true);
-		$('#submit').prop("hidden", true);
 	});
 }
 
@@ -112,8 +116,7 @@ function tableWidth() {
 }
 
 function addColClasses() {
-	$("div[data-schemapath*='Opcion']").removeClass().addClass("col-xs-3");
+	$("div[data-schemapath*='Id_opcion']").removeClass().addClass("col-xs-3");
 	$("div[data-schemapath*='Porcion']").removeClass().addClass("col-xs-2");
 	$("div[data-schemapath*='Especificar']").removeClass().addClass("col-xs-3");
 }
-

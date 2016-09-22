@@ -28,16 +28,16 @@
     <button id = 'especifSi'>Sí</button>
 	<button id = 'especifNo'>No</button> <br>
     <div id='editor_holder'></div>
-    <button id='submit'>Submit (console.log)</button>
+    <button id='submit'>Submit</button>
     
 	<script>
 		var base_url = "http://localhost:8080/AmbarNutricion";
 		document.getElementById('especifSi').disabled = true;
 		$(document).ready(function(){
 			process = function(response){
-				console.log(response);
-				var json = getSolidosJSON(response);
-				
+				// variable que recibirá son fecha, horario comida, hospitalizacion_id
+				var json = getJSONSchema(response);
+				console.log(JSON.stringify(json));
 				var editor = new JSONEditor(document.getElementById('editor_holder'),{
 					schema: json,
 					disable_collapse: true,
@@ -47,11 +47,23 @@
 					disable_array_delete_last_row: true,
 					disable_array_delete_all_rows: true,
 				});
-				
 				giveStyle();
+				
+				var especificacion = "solidos";
+				
 				document.getElementById('submit').addEventListener('click',function() {
-					console.log(JSON.stringify(editor.getValue()));
-				});
+					var jsonResp = $("#especifNo").is(":enabled") ? editor.getValue() : {};
+					var no_esp = $("#especifNo").is(":enabled") ? 0 : 1;
+					var finalJson = {
+						"fecha_comida": "2016-09-16",
+						"horario_comida": 0,
+						"no_especificar": no_esp,
+						[especificacion]: jsonResp,
+						"hospitalizacion_id": 68, 
+						"clave_corta": 1286
+					}
+					console.log(JSON.stringify(finalJson));
+				});;
 			};
 			getAPI(
 			'/categoriacomidas?find=ByValidAndDesayuno&valid=true&desayuno=true',
