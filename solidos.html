@@ -33,11 +33,30 @@
 	<script>
 		var base_url = "http://localhost:8080/AmbarNutricion";
 		document.getElementById('especifSi').disabled = true;
+		
+		var urlParams;
+		(window.onpopstate = function () {
+			var match,
+				pl     = /\+/g,  // Regex for replacing addition symbol with a space
+				search = /([^&=]+)=?([^&]*)/g,
+				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+				query  = window.location.search.substring(1);
+
+			urlParams = {};
+			while (match = search.exec(query))
+			urlParams[decode(match[1])] = decode(match[2]);
+		})();
+
+		var comida = urlParams['horario'];
+		var Comida = comida.charAt(0).toUpperCase() + comida.slice(1);
+		var tableConsult = '/categoriacomidas?find=ByValidAnd' + Comida + '&valid=true&' + comida + '=true';
+		var especificacion = "solidos";
+		
 		$(document).ready(function(){
 			process = function(response){
 				// variable que recibirá son fecha, horario comida, hospitalizacion_id
 				var json = getJSONSchema(response);
-				console.log(JSON.stringify(json));
+				//console.log(JSON.stringify(json));
 				var editor = new JSONEditor(document.getElementById('editor_holder'),{
 					schema: json,
 					disable_collapse: true,
@@ -48,8 +67,6 @@
 					disable_array_delete_all_rows: true,
 				});
 				giveStyle();
-				
-				var especificacion = "solidos";
 				
 				document.getElementById('submit').addEventListener('click',function() {
 					var jsonResp = $("#especifNo").is(":enabled") ? editor.getValue() : {};
@@ -62,11 +79,11 @@
 						"hospitalizacion_id": 68, 
 						"clave_corta": 1286
 					}
-					console.log(JSON.stringify(finalJson));
+					//console.log(JSON.stringify(finalJson));
 				});;
 			};
 			getAPI(
-			'/categoriacomidas?find=ByValidAndDesayuno&valid=true&desayuno=true',
+			tableConsult,
 			process);
 		});
 	</script>
