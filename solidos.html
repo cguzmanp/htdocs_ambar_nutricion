@@ -51,6 +51,8 @@
 		var Comida = comida.charAt(0).toUpperCase() + comida.slice(1);
 		var tableConsult = '/categoriacomidas?find=ByValidAnd' + Comida + '&valid=true&' + comida + '=true';
 		var especificacion = "solidos";
+		console.log(comida);
+		var horario_comida = comida == "desayuno" ? 0 : ( comida == "almuerzo" ? 1 : ( comida == "once" ? 2 : 3 ) )
 		
 		$(document).ready(function(){
 			process = function(response){
@@ -73,13 +75,13 @@
 					var no_esp = $("#especifNo").is(":enabled") ? 0 : 1;
 					var finalJson = {
 						"fecha_comida": "2016-09-16",
-						"horario_comida": 0,
+						"horario_comida": horario_comida,
 						"no_especificar": no_esp,
 						[especificacion]: jsonResp,
 						"hospitalizacion_id": 68, 
 						"clave_corta": 1286
 					}
-					//console.log(JSON.stringify(finalJson));
+					console.log(JSON.stringify(finalJson));
 				});;
 			};
 			getAPI(
